@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +23,12 @@ public class GameManager : MonoBehaviour
     public Vector3 OrbitPivot => _orbitPivot;
 
     public event Action BridgeStateChanged;
+
+    public void ResetBridge()
+    {
+        Scene active = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(active.buildIndex);
+    }
 
     public bool IsValidPlacement(GameObject candidate, SegmentType type)
     {

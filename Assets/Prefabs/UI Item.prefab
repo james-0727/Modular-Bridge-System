@@ -250,7 +250,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7139726198887821033
 CanvasRenderer:
@@ -305,8 +305,6 @@ MonoBehaviour:
   _thumbnail: {fileID: 7168329997952144245}
   _description: {fileID: 7836511640804476793}
   _segmentPrefab: {fileID: 2433845286168551610, guid: a5be7092f2c356945b7e1c5b01eb7cd9, type: 3}
-  _placementMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  _fallbackPlaneY: 1
-  _spawnParent: {fileID: 0}
+  _segmentType: 2
+  _canvasGroup: {fileID: 0}
+  _disabledAlpha: 0.35
