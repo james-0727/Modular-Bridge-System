@@ -24,16 +24,21 @@ public class OrbitZoomCamera : MonoBehaviour
     private bool _pivotInitialized;
 
     private GameManager _gameManager => GameManager.Get();
+    private System.Action _onBridgeStateChanged;
 
     public Vector3 Pivot
     {
         get
         {
             if (_gameManager.OrbitPivotLocked)
+            {
                 return _gameManager.OrbitPivot;
+            }
 
             if (_orbitCenter != null)
+            {
                 return _orbitCenter.position;
+            }
 
             return _orbitCenterWorld;
         }
@@ -48,19 +53,32 @@ public class OrbitZoomCamera : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameManager.BridgeStateChanged += () => RecalculateOrbitFromCurrentTransform(_smoothedPivot);
+        if (_onBridgeStateChanged == null)
+        {
+            _onBridgeStateChanged = () => RecalculateOrbitFromCurrentTransform(_smoothedPivot);
+        }
+
+        if (_gameManager != null)
+        {
+            _gameManager.BridgeStateChanged += _onBridgeStateChanged;
+        }
     }
 
     private void OnDisable()
     {
-        _gameManager.BridgeStateChanged -= () => RecalculateOrbitFromCurrentTransform(_smoothedPivot);
+        if (_gameManager != null && _onBridgeStateChanged != null)
+        {
+            _gameManager.BridgeStateChanged -= _onBridgeStateChanged;
+        }
     }
 
     private void LateUpdate()
     {
         Mouse mouse = Mouse.current;
         if (mouse == null)
+        {
             return;
+        }
 
         if (mouse.rightButton.isPressed)
         {
@@ -120,7 +138,9 @@ public class OrbitZoomCamera : MonoBehaviour
             _pitch = e.x;
 
             if (_pitch > 180f)
+            {
                 _pitch -= 360f;
+            }
 
             _pitch = Mathf.Clamp(_pitch, _minPitch, _maxPitch);
         }

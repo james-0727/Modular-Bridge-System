@@ -24,16 +24,22 @@ public class BridgeSegment : MonoBehaviour
     {
         Mouse mouse = Mouse.current;
         if (mouse == null)
+        {
             return;
+        }
 
         Camera cam = Camera.main;
         if (cam == null)
+        {
             return;
+        }
 
         if (!_isDragging && mouse.leftButton.wasPressedThisFrame)
         {
             if (_activeDrag != null)
+            {
                 return;
+            }
 
             Ray pickRay = cam.ScreenPointToRay(mouse.position.ReadValue());
             if (Physics.Raycast(pickRay, out RaycastHit hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
@@ -55,7 +61,9 @@ public class BridgeSegment : MonoBehaviour
             {
                 Vector3 p = ray.GetPoint(enter);
                 if (_gameManager.ZLocked)
+                {
                     p.z = _gameManager.LockedZ;
+                }
                 transform.position = p;
             }
 

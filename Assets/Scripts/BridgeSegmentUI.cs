@@ -20,7 +20,9 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void Awake()
     {
         if (_canvasGroup == null)
+        {
             _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
     }
 
     private void OnEnable()
@@ -31,7 +33,10 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void OnDisable()
     {
-        _gameManager.BridgeStateChanged -= RefreshAvailabilityUI;
+        if (_gameManager != null)
+        {
+            _gameManager.BridgeStateChanged -= RefreshAvailabilityUI;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -42,10 +47,14 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
 
         if (_gameManager == null)
+        {
             return;
+        }
 
         if (!_gameManager.CanSpawnSegment(_segmentType))
+        {
             return;
+        }
 
         _clonedSegment = Instantiate(_segmentPrefab, Vector3.zero, Quaternion.identity);
         _clonedSegment.SetSegmentType(_segmentType);
@@ -71,7 +80,9 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnEndDrag(PointerEventData eventData)
     {
         if (_clonedSegment == null)
+        {
             return;
+        }
 
         if (_gameManager == null || !_gameManager.IsValidPlacement(_clonedSegment.gameObject, _segmentType))
         {
@@ -104,14 +115,18 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         Ray ray = cam.ScreenPointToRay(eventData.position);
         if (_gameManager == null)
+        {
             return;
+        }
 
         Plane plane = new Plane(Vector3.up, new Vector3(0f, _gameManager.PlacementPlaneY, 0f));
         if (plane.Raycast(ray, out float enter))
         {
             Vector3 p = ray.GetPoint(enter);
             if (_gameManager.ZLocked)
+            {
                 p.z = _gameManager.LockedZ;
+            }
             _clonedSegment.transform.position = p;
         }
     }
@@ -119,7 +134,9 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void RefreshAvailabilityUI()
     {
         if (_canvasGroup == null)
+        {
             return;
+        }
 
         bool available = _gameManager.CanSpawnSegment(_segmentType);
         _canvasGroup.alpha = available ? 1f : _disabledAlpha;

@@ -27,33 +27,47 @@ public class GameManager : MonoBehaviour
     public bool IsValidPlacement(GameObject candidate, SegmentType type)
     {
         if (candidate == null)
+        {
             return false;
+        }
 
         Vector3 pos = candidate.transform.position;
 
         if (_zLocked && Mathf.Abs(pos.z - _lockedZ) > 0.001f)
+        {
             return false;
+        }
 
         if (type == SegmentType.Start && _endPlaced && pos.x <= _endX)
+        {
             return false;
+        }
 
         if (type == SegmentType.End && _startPlaced && _startX <= pos.x)
+        {
             return false;
+        }
 
         if (type == SegmentType.Mid || type == SegmentType.MidExt)
         {
             if (!_startPlaced || !_endPlaced)
+            {
                 return false;
+            }
 
             float min = Mathf.Min(_startX, _endX);
             float max = Mathf.Max(_startX, _endX);
             if (pos.x <= min || pos.x >= max)
+            {
                 return false;
+            }
         }
 
         Collider col = candidate.GetComponentInChildren<Collider>();
         if (col == null)
+        {
             return true;
+        }
 
         Bounds b = col.bounds;
         Collider[] hits = Physics.OverlapBox(
@@ -67,12 +81,18 @@ public class GameManager : MonoBehaviour
         {
             Collider h = hits[i];
             if (h == null || h == col)
+            {
                 continue;
+            }
             if (h.transform.IsChildOf(candidate.transform))
+            {
                 continue;
+            }
 
             if (h.GetComponentInParent<BridgeSegment>() != null)
+            {
                 return false;
+            }
         }
 
         return true;
@@ -81,13 +101,19 @@ public class GameManager : MonoBehaviour
     public bool CanSpawnSegment(SegmentType type)
     {
         if (type == SegmentType.Start)
+        {
             return !_startPlaced;
+        }
 
         if (type == SegmentType.End)
+        {
             return !_endPlaced;
+        }
 
         if (type == SegmentType.Mid || type == SegmentType.MidExt)
+        {
             return _startPlaced && _endPlaced;
+        }
 
         return true;
     }
