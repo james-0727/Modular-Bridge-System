@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class BridgeSegment : MonoBehaviour
 {
@@ -35,6 +36,11 @@ public class BridgeSegment : MonoBehaviour
 
         if (!_isDragging && mouse.leftButton.wasPressedThisFrame)
         {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             if (_activeDrag != null)
             {
                 return;
