@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8aa57a122dca2f468a37fd94e936329, type: 3}
+  m_Name: BridgeModuleSet
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeModuleSet
+  start:
+    name: 
+    prefab: {fileID: 1200333701218997003, guid: a5be7092f2c356945b7e1c5b01eb7cd9, type: 3}
+    length: 1
+    autoComputeLengthFromBounds: 1
+  middle:
+    name: 
+    prefab: {fileID: 4301918772158430593, guid: 0882a4286e1db2b4c80c3b63c862f348, type: 3}
+    length: 1
+    autoComputeLengthFromBounds: 1
+  end:
+    name: 
+    prefab: {fileID: 2041960891659235096, guid: ffe11b067e022e84a893c1d2a88916a9, type: 3}
+    length: 1
+    autoComputeLengthFromBounds: 1
+  fillers:
+  - name: 
+    prefab: {fileID: 2041960891659235096, guid: ffe11b067e022e84a893c1d2a88916a9, type: 3}
+    length: 0
+    autoComputeLengthFromBounds: 1

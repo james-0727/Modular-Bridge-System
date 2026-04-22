@@ -42,7 +42,7 @@ ExportedObj/
 .consulo/
 *.csproj
 *.unityproj
-*.sln
+*.slnx
 *.suo
 *.tmp
 *.user
@@ -72,6 +72,7 @@ mono_crash.*
 *.unitypackage
 *.unitypackage.meta
 *.app
+*.vsconfig
 
 # Crashlytics generated file
 crashlytics-build.properties
