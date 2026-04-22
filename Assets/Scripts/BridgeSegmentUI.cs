@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -57,7 +58,6 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
 
         _clonedSegment = Instantiate(_segmentPrefab, Vector3.zero, Quaternion.identity);
-        _clonedSegment.SetSegmentType(_segmentType);
         UpdateClonedPosition(eventData);
     }
 
@@ -66,6 +66,12 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         UpdateClonedPosition(eventData);
         if (_clonedSegment != null)
         {
+            Keyboard kb = Keyboard.current;
+            if (kb != null && (kb.leftShiftKey.isPressed || kb.rightShiftKey.isPressed))
+            {
+                _clonedSegment.TryMagnetSnapToNearby();
+            }
+
             if (_gameManager.IsValidPlacement(_clonedSegment.gameObject, _segmentType))
             {
                 _clonedSegment.SetColor(Color.green);
