@@ -17,26 +17,21 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private BridgeSegment _clonedSegment;
     private GameManager _gameManager => GameManager.Get();
 
-    void Start()
+    private void Awake()
     {
         if (_canvasGroup == null)
             _canvasGroup = gameObject.AddComponent<CanvasGroup>();
-
-        RefreshAvailabilityUI();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        if (_gameManager != null)
-            _gameManager.BridgeStateChanged += RefreshAvailabilityUI;
-
         RefreshAvailabilityUI();
+        _gameManager.BridgeStateChanged += RefreshAvailabilityUI;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        if (_gameManager != null)
-            _gameManager.BridgeStateChanged -= RefreshAvailabilityUI;
+        _gameManager.BridgeStateChanged -= RefreshAvailabilityUI;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -62,7 +57,7 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         UpdateClonedPosition(eventData);
         if (_clonedSegment != null)
         {
-            if (_gameManager != null && _gameManager.IsValidPlacement(_clonedSegment.gameObject, _segmentType))
+            if (_gameManager.IsValidPlacement(_clonedSegment.gameObject, _segmentType))
             {
                 _clonedSegment.SetColor(Color.green);
             }
@@ -121,12 +116,12 @@ public class BridgeSegmentUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
-    void RefreshAvailabilityUI()
+    private void RefreshAvailabilityUI()
     {
         if (_canvasGroup == null)
             return;
 
-        bool available = _gameManager != null && _gameManager.CanSpawnSegment(_segmentType);
+        bool available = _gameManager.CanSpawnSegment(_segmentType);
         _canvasGroup.alpha = available ? 1f : _disabledAlpha;
         _canvasGroup.blocksRaycasts = available;
         _canvasGroup.interactable = available;

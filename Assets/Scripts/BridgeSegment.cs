@@ -26,9 +26,6 @@ public class BridgeSegment : MonoBehaviour
         if (mouse == null)
             return;
 
-        if (_gameManager == null)
-            return;
-
         Camera cam = Camera.main;
         if (cam == null)
             return;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,10 +17,6 @@ public class GameManager : MonoBehaviour
     private Vector3 _orbitPivot;
 
     public float PlacementPlaneY => _placementPlaneY;
-    public bool StartPlaced => _startPlaced;
-    public bool EndPlaced => _endPlaced;
-    public float StartX => _startX;
-    public float EndX => _endX;
     public bool ZLocked => _zLocked;
     public float LockedZ => _lockedZ;
     public bool OrbitPivotLocked => _orbitPivotLocked;
@@ -101,6 +98,7 @@ public class GameManager : MonoBehaviour
         bool beforeEnd = _endPlaced;
         float beforeStartX = _startX;
         float beforeEndX = _endX;
+
         if (type == SegmentType.Start)
         {
             _startPlaced = true;
@@ -141,6 +139,11 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Get()
     {
+        if (_instance == null)
+        {
+            _instance = FindFirstObjectByType<GameManager>();
+        }
+
         return _instance;
     }
 }

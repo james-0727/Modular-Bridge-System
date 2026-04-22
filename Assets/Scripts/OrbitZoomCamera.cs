@@ -29,7 +29,7 @@ public class OrbitZoomCamera : MonoBehaviour
     {
         get
         {
-            if (_gameManager != null && _gameManager.OrbitPivotLocked)
+            if (_gameManager.OrbitPivotLocked)
                 return _gameManager.OrbitPivot;
 
             if (_orbitCenter != null)
@@ -44,9 +44,16 @@ public class OrbitZoomCamera : MonoBehaviour
         _smoothedPivot = Pivot;
         _pivotInitialized = true;
         RecalculateOrbitFromCurrentTransform(_smoothedPivot);
+    }
 
-        if (_gameManager != null)
-            _gameManager.BridgeStateChanged += () => RecalculateOrbitFromCurrentTransform(_smoothedPivot);
+    private void OnEnable()
+    {
+        _gameManager.BridgeStateChanged += () => RecalculateOrbitFromCurrentTransform(_smoothedPivot);
+    }
+
+    private void OnDisable()
+    {
+        _gameManager.BridgeStateChanged -= () => RecalculateOrbitFromCurrentTransform(_smoothedPivot);
     }
 
     private void LateUpdate()
